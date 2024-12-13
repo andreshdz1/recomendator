@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: recomendator
+spec:
+  selector:
+    app: recomendator
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8888
+  type: NodePort

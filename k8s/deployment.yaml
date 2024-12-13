@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recomendator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recomendator
+  template:
+    metadata:
+      labels:
+        app: recomendator
+    spec:
+      containers:
+      - name: recomendator
+        image: recomendator:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8888
+        resources:
+          requests:
+            cpu: "500m"  # Lowered CPU request
+            memory: "512Mi"
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+        envFrom:                 # Moved envFrom to the container level
+        - configMapRef:
+            name: config

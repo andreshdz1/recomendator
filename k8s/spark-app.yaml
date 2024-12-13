@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spark-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: spark-container
+        image: recomendator:latest
+        command: ["/opt/spark/bin/spark-submit"]
+        args: [
+          "--master", "k8s://https://kubernetes.default.svc",
+          "--deploy-mode", "cluster",
+          "--name", "spark-analysis",
+          "--conf", "spark.executor.instances=2",
+          "local:///app/my_spark_script.py"
+        ]
+      restartPolicy: Never
